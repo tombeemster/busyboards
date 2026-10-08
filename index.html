@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Busyboards by tombeemster</title>
+  <link rel="icon" href="data:,">
+  <style>
+    /* Spacing (Gestalt proximity): --set inside a set of controls so it reads as one thing,
+       --pad inside tiles, --gap between tiles and rows, --slider-gap between vertical and
+       --slider-stack-gap between horizontal sliders (wider, so each is comfortable to grab). */
+    :root { --set: 12px; --pad: 32px; --gap: 16px; --slider-gap: 40px; --slider-stack-gap: 32px;
+      /* One frame for tiles and the card alike. */
+      --tile-radius: var(--wa-panel-border-radius);
+      /* The tile edge: two stacked 1px rings, also used for the card's divider. */
+      --tile-edge: rgba(0, 0, 0, 0.06);
+      --tile-edge-light: rgba(196, 196, 196, 0.07);
+      --tile-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.04),
+        inset 0 0 0 1px var(--tile-edge), inset 0 -1px 0 0 var(--tile-edge),
+        inset 0 0 0 1px var(--tile-edge-light); }
+    body { margin: 0; min-height: 100dvh; box-sizing: border-box; padding: 24px 16px;
+      display: grid; grid-template-rows: 1fr auto; gap: 16px; }
+    /* A quiet title line at the bottom. */
+    footer { text-align: center; font-size: var(--wa-font-size-xs); color: var(--wa-color-text-quiet); }
+    main { display: grid; place-items: center; }
+
+    /* Rows of components with similar heights. Items share their row's height and hug their
+       component (plus padding); a .stretch item takes the row's spare width. */
+    .board { display: grid; gap: var(--gap); max-width: 100%; opacity: 0; transition: opacity .3s; }
+    .board.ready { opacity: 1; }
+    .row { display: flex; flex-wrap: wrap; gap: var(--gap); }
+    .item { flex: none; display: grid; place-items: center; padding: var(--pad); }
+    .item.stretch { flex: 1 1 0; }
+    .item[hidden] { display: none; }
+    /* Phones (the only breakpoint; app.js reads --mobile): tighter tile padding; rows wrap instead
+       of being filled (app.js packs small tiles together), and every tile grows to fill its line,
+       so a lone tile spans the full width and tiles that fit side by side share it. The arrows
+       keep hugging their button. */
+    @media (max-width: 767.98px) {
+      :root { --mobile: 1; --pad: 24px; }
+      .item { flex: 1 1 auto; }
+      .item[data-type="prev"], .item[data-type="next"] { flex: none; }
+    }
+    /* While app.js measures, every tile shows at its natural width on one line. */
+    .board.measuring .row { flex-wrap: nowrap; }
+    .board.measuring .item { flex: none; }
+    /* wa-otp-input caps its box row at 100% of itself and scrolls; at content size that clips
+       the last box by its focus-ring padding. */
+    wa-otp-input::part(segments) { max-width: none; }
+    /* Code boxes as tall as the other inputs. */
+    wa-otp-input { --segment-size: var(--wa-form-control-height); }
+    /* A native number input takes its width from max (or a wide default without one); size it to
+       its value instead, so the tile hugs the number and grows as it counts up. */
+    wa-number-input::part(input) { field-sizing: content; min-width: 2ch; }
+    /* A wrong code: danger-coloured boxes and a short shake (the component has no error styling). */
+    wa-otp-input.wrong { animation: shake .4s; }
+    wa-otp-input.wrong::part(segment) { border-color: var(--wa-color-danger-border-loud); color: var(--wa-color-danger-on-quiet); }
+    @keyframes shake { 20%, 60% { translate: -4px; } 40%, 80% { translate: 4px; } }
+    /* A component with its own frame (the card) fills its item instead of a tile, so its frame
+       sits where a tile border would: same height, same gaps, same padding, no own surface. */
+    .item:not(.tile) { padding: 0; place-items: stretch; }
+    .item > wa-card { --spacing: var(--pad); background-color: transparent;
+      border: none; border-radius: var(--tile-radius); box-shadow: var(--tile-shadow); }
+    /* Same padding in the header as in the body; the body fills the card and centres its content. */
+    /* The divider is drawn like the tile edge (same two 1px rings) instead of the card's own border. */
+    .item > wa-card::part(header) { padding: var(--spacing); border-block-end: none;
+      box-shadow: inset 0 -1px 0 0 var(--tile-edge), inset 0 -1px 0 0 var(--tile-edge-light); }
+    .item > wa-card::part(body) { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    /* Tiles mark a region with a border only; same background as the page. */
+    .tile { 
+      /* border: var(--wa-panel-border-width) var(--wa-panel-border-style) var(--wa-color-surface-border); */
+      border-radius: var(--tile-radius);
+      box-shadow: var(--tile-shadow);
+    }
+
+    /* Sets of controls inside a component. */
+    .set { display: flex; align-items: center; gap: var(--set); }
+    .spread { justify-content: space-between; }
+    .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--set); }
+    /* Switches twice Web Awesome's default spacing (0.5em). */
+    [data-type="switches"] wa-checkbox-group { --gap: 1em; }
+    .faders { display: flex; gap: var(--slider-gap); } /* vertical tracks are 200px tall (Web Awesome) */
+    /* The horizontal sliders take the board's main accent (set by app.js). */
+    [data-type="sliders"] wa-slider { --wa-form-control-activated-color: var(--accent-1); }
+    /* Fills its stretching tile; measured (app.js) at its minimum, so it fits beside most rows. */
+    .sliders { display: grid; gap: var(--slider-stack-gap); width: 100%; min-width: 10rem; }
+    .board.measuring .sliders { width: 10rem; }
+    /* The tag input likewise: its text box is measured as wide as the placeholder, not the
+       browser's default input width (about 20 characters). */
+    .board.measuring wa-tag-input::part(input) { field-sizing: content; }
+    /* Chart tile: a doughnut (conic gradient with a masked hole, --hole sets its size) and a
+       legend to its right; app.js drives both from the board's sliders and switches. */
+    .chart { display: flex; align-items: center; gap: var(--pad); }
+    .doughnut { width: 8rem; aspect-ratio: 1; border-radius: 50%;
+      mask: radial-gradient(farthest-side, transparent var(--hole, 55%), #000 calc(var(--hole, 55%) + 1%)); }
+    .legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: var(--wa-font-size-s); }
+    .legend li { display: flex; align-items: center; gap: var(--set); }
+    .legend li::before { content: ''; width: 10px; height: 10px; border-radius: 2px; background: var(--swatch); }
+    .legend li.off { opacity: .4; }
+    /* Counter mode: the percentage in the ring's hole (outside the masked doughnut, which would
+       hide it); the legend stays, dimmed as if every entry were switched off. */
+    .dial { position: relative; }
+    .count { position: absolute; inset: 0; display: none; place-items: center;
+      font-size: var(--wa-font-size-l); font-weight: var(--wa-font-weight-bold); font-variant-numeric: tabular-nums; }
+    .chart.counting .count { display: grid; }
+    .chart.counting .legend li { opacity: .4; }
+  </style>
+</head>
+<body>
+  <main><div class="board" id="board"></div></main>
+  <footer>Busyboards by <a href="https://github.com/tombeemster" target="_blank">tombeemster</a></footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-08",
+  "look": {
+    "theme": "awesome",
+    "palette": "default",
+    "brand": "red"
+  },
+  "css": [
+    "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/styles/webawesome.css",
+    "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/styles/themes/awesome.css",
+    "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/styles/color/palettes/default.css",
+    "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/styles/color/variants.css"
+  ],
+  "js": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/webawesome.loader.js",
+  "classes": [
+    "wa-theme-awesome",
+    "wa-palette-default",
+    "wa-brand-red"
+  ],
+  "rows": [
+    {
+      "kind": "low",
+      "tiles": [
+        {
+          "type": "prev",
+          "keep": true,
+          "tile": true,
+          "html": "<wa-button aria-label='Previous board' data-step='-1'><svg viewBox='0 0 24 24' width='1.2em' height='1.2em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M19 12H5M12 19l-7-7 7-7'/></svg></wa-button>"
+        },
+        {
+          "type": "segmented",
+          "tile": true,
+          "html": "<wa-radio-group name='r0t1' orientation='horizontal' value='Star'><wa-radio appearance='button' value='Star'>Star</wa-radio><wa-radio appearance='button' value='Hexagon'>Hexagon</wa-radio><wa-radio appearance='button' value='Heart'>Heart</wa-radio></wa-radio-group>"
+        },
+        {
+          "type": "cta",
+          "tile": true,
+          "html": "<wa-button-group label='A clue'><wa-button variant='danger' lang='ko'><bdi>골라</bdi></wa-button><wa-button variant='brand' lang='ja'><bdi>オプション</bdi></wa-button><wa-button variant='warning' lang='zh'><bdi>味觉</bdi></wa-button></wa-button-group>"
+        },
+        {
+          "type": "tags",
+          "keep": true,
+          "stretch": true,
+          "tile": true,
+          "html": "<wa-tag-input aria-label='Tags' placeholder='What comes next?' value='one,four,two,five' data-code='1425' data-next='3' data-next-name='three' style='width:100%'></wa-tag-input>"
+        }
+      ]
+    },
+    {
+      "kind": "low",
+      "tiles": [
+        {
+          "type": "sliders",
+          "stretch": true,
+          "tile": true,
+          "html": "<div class='sliders'><wa-slider value='41'></wa-slider><wa-slider range min-value='11' max-value='37'></wa-slider></div>"
+        },
+        {
+          "type": "colour",
+          "tile": true,
+          "html": "<wa-color-picker swatches='#e63946; #f4a261; #e9c46a; #2a9d8f; #457b9d; #8338ec; #ff006e; #06d6a0' aria-label='Main colour'></wa-color-picker>"
+        },
+        {
+          "type": "select",
+          "keep": true,
+          "tile": true,
+          "html": "<wa-select aria-label='Who completes the Senses?' data-answer='taste'><wa-option value='direction' selected>Direction</wa-option><wa-option value='taste'>Taste</wa-option><wa-option value='humour'>Humour</wa-option><wa-option value='intuition'>Intuition</wa-option></wa-select>"
+        },
+        {
+          "type": "next",
+          "keep": true,
+          "tile": true,
+          "html": "<wa-button aria-label='Next board' data-step='1'><svg viewBox='0 0 24 24' width='1.2em' height='1.2em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M5 12h14M12 5l7 7-7 7'/></svg></wa-button>"
+        }
+      ]
+    },
+    {
+      "kind": "tall",
+      "tiles": [
+        {
+          "type": "faders",
+          "tile": true,
+          "html": "<div class='faders'><wa-slider orientation='vertical' value='29'></wa-slider><wa-slider orientation='vertical' value='93'></wa-slider><wa-slider orientation='vertical' value='85'></wa-slider><wa-slider orientation='vertical' value='5'></wa-slider></div>"
+        },
+        {
+          "type": "chart",
+          "tile": true,
+          "html": "<div class='chart'><div class='dial'><div class='doughnut'></div><span class='count'></span></div><ul class='legend'></ul></div>"
+        },
+        {
+          "type": "card",
+          "html": "<wa-card with-header><div slot='header'><wa-number-input aria-label='Amount' value='5' min='0'></wa-number-input></div><div class='set spread'><wa-radio-group name='r2t2' orientation='horizontal' value='light' aria-label='Mode'><wa-radio appearance='button' value='light' aria-label='Light'><svg viewBox='0 0 24 24' width='1.2em' height='1.2em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><circle cx='12' cy='12' r='4'/><path d='M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'/></svg></wa-radio><wa-radio appearance='button' value='dark' aria-label='Dark'><svg viewBox='0 0 24 24' width='1.2em' height='1.2em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/></svg></wa-radio></wa-radio-group><wa-button variant='brand'>Save</wa-button></div></wa-card>"
+        },
+        {
+          "type": "switches",
+          "tile": true,
+          "html": "<wa-checkbox-group label='Senses'><wa-switch>Sight</wa-switch><wa-switch>Hearing</wa-switch><wa-switch>Smell</wa-switch><wa-switch>Touch</wa-switch></wa-checkbox-group>"
+        },
+        {
+          "type": "qr",
+          "tile": true,
+          "html": "<wa-qr-code value='Add &#39;pickle&#39; as tag' size='160' label='A secret message' data-secret='pickle'></wa-qr-code>"
+        }
+      ]
+    }
+  ]
+}
