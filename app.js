@@ -114,11 +114,10 @@ const watch = new ResizeObserver(refill);
 el.querySelectorAll('.row[data-kind="tall"] > .item').forEach(item => watch.observe(item));
 addEventListener('resize', refill);
 setMode(dark.matches); // again, now that the card's toggle exists to show it
-// The board's arrow tiles: disabled where there's no board to go to.
+// The board's arrow tiles: always pressable; where there's no board to go to, a toast says so.
 for (const button of el.querySelectorAll('wa-button[data-step]')) {
   const step = Number(button.dataset.step);
-  button.disabled = !dates[at - step];
-  button.addEventListener('click', () => jump(step));
+  button.addEventListener('click', () => jump(step) || toast(step > 0 ? 'This is the newest board. A new one appears tomorrow.' : 'This is the very first board.'));
 }
 el.classList.add('ready');
 

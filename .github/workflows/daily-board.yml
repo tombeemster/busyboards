@@ -1,0 +1,42 @@
+# Generates the day's board just after midnight in Amsterdam and commits it. Cron runs on UTC,
+# so it runs at both 22:05 (summer time) and 23:05 (winter time); the generator never
+# overwrites a board, so the run that's still on yesterday's date commits nothing.
+name: Daily board
+
+on:
+  schedule:
+    - cron: '5 22 * * *'
+    - cron: '5 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Amsterdam
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node generate.mjs
+      - name: Commit the new board
+        id: commit
+        run: |
+          git add boards
+          if git diff --cached --quiet; then echo "No new board."; exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898341+github-actions[bot]@users.noreply.github.com'
+          git commit -m "Board for $(date +%F)"
+          git push
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+      # Pushes made with the workflow's token don't always start a Pages build, so ask for one.
+      - name: Rebuild Pages
+        if: steps.commit.outputs.pushed == 'true'
+        run: gh api --method POST "repos/${{ github.repository }}/pages/builds"
+        env:
+          GH_TOKEN: ${{ github.token }}
