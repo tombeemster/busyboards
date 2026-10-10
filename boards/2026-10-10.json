@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-10",
+  "look": {
+    "theme": "awesome",
+    "palette": "default",
+    "brand": "green"
+  },
+  "css": [
+    "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/styles/webawesome.css",
+    "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/styles/themes/awesome.css",
+    "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/styles/color/palettes/default.css",
+    "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/styles/color/variants.css"
+  ],
+  "js": "https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.14.0/dist-cdn/webawesome.loader.js",
+  "classes": [
+    "wa-theme-awesome",
+    "wa-palette-default",
+    "wa-brand-green"
+  ],
+  "rows": [
+    {
+      "kind": "low",
+      "tiles": [
+        {
+          "type": "sliders",
+          "stretch": true,
+          "tile": true,
+          "html": "<div class='sliders'><wa-slider value='48'></wa-slider><wa-slider range min-value='19' max-value='68'></wa-slider></div>"
+        },
+        {
+          "type": "select",
+          "keep": true,
+          "tile": true,
+          "html": "<wa-select aria-label='Who completes the Power Rangers?' data-answer='red'><wa-option value='white' selected>White</wa-option><wa-option value='red'>Red</wa-option><wa-option value='green'>Green</wa-option><wa-option value='gold'>Gold</wa-option></wa-select>"
+        },
+        {
+          "type": "cta",
+          "tile": true,
+          "html": "<wa-button-group label='A clue'><wa-button variant='success' lang='ja'><bdi>選んで</bdi></wa-button><wa-button variant='warning' lang='zh'><bdi>选项</bdi></wa-button><wa-button variant='danger' lang='ru'><bdi>Красный</bdi></wa-button></wa-button-group>"
+        },
+        {
+          "type": "next",
+          "keep": true,
+          "tile": true,
+          "html": "<wa-button aria-label='Next board' data-step='1'><svg viewBox='0 0 24 24' width='1.2em' height='1.2em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M5 12h14M12 5l7 7-7 7'/></svg></wa-button>"
+        }
+      ]
+    },
+    {
+      "kind": "tall",
+      "tiles": [
+        {
+          "type": "chart",
+          "tile": true,
+          "html": "<div class='chart'><div class='dial'><div class='doughnut'></div><span class='count'></span></div><ul class='legend'></ul></div>"
+        },
+        {
+          "type": "card",
+          "html": "<wa-card with-header><div slot='header'><wa-number-input aria-label='Amount' value='5' min='0'></wa-number-input></div><div class='set spread'><wa-radio-group name='r1t1' orientation='horizontal' value='light' aria-label='Mode'><wa-radio appearance='button' value='light' aria-label='Light'><svg viewBox='0 0 24 24' width='1.2em' height='1.2em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><circle cx='12' cy='12' r='4'/><path d='M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'/></svg></wa-radio><wa-radio appearance='button' value='dark' aria-label='Dark'><svg viewBox='0 0 24 24' width='1.2em' height='1.2em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/></svg></wa-radio></wa-radio-group><wa-button variant='brand'>Save</wa-button></div></wa-card>"
+        },
+        {
+          "type": "switches",
+          "tile": true,
+          "html": "<wa-checkbox-group label='Power Rangers'><wa-switch>Black</wa-switch><wa-switch>Blue</wa-switch><wa-switch>Yellow</wa-switch><wa-switch>Pink</wa-switch></wa-checkbox-group>"
+        },
+        {
+          "type": "qr",
+          "tile": true,
+          "html": "<wa-qr-code value='Add &#39;tadpole&#39; as tag' size='160' label='A secret message' data-secret='tadpole'></wa-qr-code>"
+        },
+        {
+          "type": "faders",
+          "tile": true,
+          "html": "<div class='faders'><wa-slider orientation='vertical' value='47'></wa-slider><wa-slider orientation='vertical' value='78'></wa-slider><wa-slider orientation='vertical' value='5'></wa-slider><wa-slider orientation='vertical' value='44'></wa-slider></div>"
+        }
+      ]
+    },
+    {
+      "kind": "low",
+      "tiles": [
+        {
+          "type": "prev",
+          "keep": true,
+          "tile": true,
+          "html": "<wa-button aria-label='Previous board' data-step='-1'><svg viewBox='0 0 24 24' width='1.2em' height='1.2em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M19 12H5M12 19l-7-7 7-7'/></svg></wa-button>"
+        },
+        {
+          "type": "tags",
+          "keep": true,
+          "stretch": true,
+          "tile": true,
+          "html": "<wa-tag-input aria-label='Tags' placeholder='What comes next?' value='seven,five,eight,six' data-code='7586' data-next='9' data-next-name='nine' style='width:100%'></wa-tag-input>"
+        },
+        {
+          "type": "colour",
+          "tile": true,
+          "html": "<wa-color-picker swatches='#e63946; #f4a261; #e9c46a; #2a9d8f; #457b9d; #8338ec; #ff006e; #06d6a0' aria-label='Main colour'></wa-color-picker>"
+        },
+        {
+          "type": "segmented",
+          "tile": true,
+          "html": "<wa-radio-group name='r2t3' orientation='horizontal' value='Circle'><wa-radio appearance='button' value='Circle'>Circle</wa-radio><wa-radio appearance='button' value='Hexagon'>Hexagon</wa-radio><wa-radio appearance='button' value='Square'>Square</wa-radio></wa-radio-group>"
+        }
+      ]
+    }
+  ]
+}
